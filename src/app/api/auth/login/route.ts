@@ -1,44 +1,33 @@
+import { loginSchema } from '@/app/schemas/auth.schema';
 import { NextRequest, NextResponse } from 'next/server';
+import { loginUser } from '@/app/services/auth.service';
+import { setAccessTokenCookie } from '@/lib/cookies';
+import { handleApiError } from '@/lib/api-error';
 export async function POST(request: NextRequest){
     try{
         const body = await request.json();
-        const { email, password } = body;
+        const result = loginSchema.safeParse(body);
 
-        const backendResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`,{
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                email, password
-            })
-        });
-        
-        const data = await backendResponse.json();
-
-        if(!backendResponse.ok){
-            return NextResponse.json({error: data.message}, {status: backendResponse.status});
+        if (!result.success){
+            return NextResponse.json({
+                error: result.error.flatten()
+            }, {status: 400})
         }
-        const response = NextResponse.json(
-            {message: "Successfully login" ,user: data.user},
-            {status: 200}
-        );
 
-        response.cookies.set({
-            name: "access_token",
-            value: data.accessToken,
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: "strict",
-            maxAge: 60 * 60 * 24 * 7,
-            path: "/",
-        });
+        const data = await loginUser(result.data);
+        
+        const response = NextResponse.json(
+            {
+                success: true,
+                message: "Login Successfully",
+            },
+            {status: 200}
+        )
+    
+        setAccessTokenCookie(response, data.accessToken);
 
         return response;
-    }catch(e){
-        return NextResponse.json({
-            error: "Internal Server Error"
-        }, {status: 500})
+    }catch(error){
+        return handleApiError(error);
     }
 }
