@@ -5,8 +5,10 @@ export interface RegisterRequest {
 }
 
 export interface RegisterResponse {
-    accessToken: string,
-    user: {
+    success: boolean,
+    message: string,
+    token: string,
+    data: {
         id: number,
         name: string,
         email: string,
@@ -19,10 +21,16 @@ export interface LoginInput{
 }
 
 export interface LoginResponse {
-    accessToken: string,
-    user: {
-        id: number,
-        name: string,
-        email: string,
+    success: boolean,
+    message: string,
+    data: {
+        access_token: string,
+        token_type: string,
+        user: {
+            id: number,
+            name: string,
+            email: string,
+            role: string
+        }
     }
 }

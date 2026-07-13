@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { registerSchema } from "@/app/schemas/auth.schema";
 import { registerUser } from "@/app/services/auth.service";
-import { setAccessTokenCookie } from "@/lib/cookies";
 import { handleApiError } from "@/lib/api-error";
+
 export async function POST(request: NextRequest) {
     try {
-        const body = await request.json();
+        const body = await request.json(); // read incoming data from the frontend and parse it from json to JS object
 
-        const result = registerSchema.safeParse(body);
+        const result = registerSchema.safeParse(body); //validates data against a Zod schema without throwing exceptions
 
         if (!result.success) {
             return NextResponse.json(
@@ -21,9 +21,9 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const data = await registerUser(result.data);
+        await registerUser(result.data);
 
-        const response = NextResponse.json(
+        return NextResponse.json(
             {
                 success: true,
                 message: "Registered successfully",
@@ -32,13 +32,6 @@ export async function POST(request: NextRequest) {
                 status: 201,
             }
         );
-
-        setAccessTokenCookie(
-            response,
-            data.accessToken
-        );
-
-        return response;
     } catch (error) {
         return handleApiError(error);
     }

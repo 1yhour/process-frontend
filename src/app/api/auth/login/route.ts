@@ -1,7 +1,7 @@
 import { loginSchema } from '@/app/schemas/auth.schema';
 import { NextRequest, NextResponse } from 'next/server';
 import { loginUser } from '@/app/services/auth.service';
-import { setAccessTokenCookie } from '@/lib/cookies';
+import { setAccessTokenCookie, setRoleCookie } from '@/lib/cookies';
 import { handleApiError } from '@/lib/api-error';
 export async function POST(request: NextRequest){
     try{
@@ -14,7 +14,7 @@ export async function POST(request: NextRequest){
             }, {status: 400})
         }
 
-        const data = await loginUser(result.data);
+        const { data: payload } = await loginUser(result.data);
         
         const response = NextResponse.json(
             {
@@ -24,7 +24,12 @@ export async function POST(request: NextRequest){
             {status: 200}
         )
     
-        setAccessTokenCookie(response, data.accessToken);
+        setAccessTokenCookie(response, payload.access_token);
+        
+        // Save the role to a cookie so proxy.ts can read it
+        if (payload.user && payload.user.role) {
+            setRoleCookie(response, payload.user.role);
+        }
 
         return response;
     }catch(error){
