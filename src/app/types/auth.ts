@@ -34,3 +34,22 @@ export interface LoginResponse {
         }
     }
 }
+
+export interface ProductResponse{
+    success: boolean,
+    message: string,
+    data: {
+        id: number,
+        name: string,
+        price: number
+    }
+}
+
+export interface CategoryResponse{
+    success: boolean,
+    message: string,
+    data: {
+        id: number,
+        name: string,
+    }
+}
