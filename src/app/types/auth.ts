@@ -53,3 +53,8 @@ export interface CategoryResponse{
         name: string,
     }
 }
+export type HeaderProps ={
+    id: number,
+    title:string,
+    url: string
+}

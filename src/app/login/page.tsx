@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -24,11 +24,11 @@ export default function Login() {
         body: JSON.stringify({ email, password }),
       });
 
+
       if (!res.ok) {
         const data = await res.json();
         throw new Error(data.error || "Something went wrong during login.");
       }
-
       router.push("/home"); 
     } catch (err: any) {
       setError(err.message);

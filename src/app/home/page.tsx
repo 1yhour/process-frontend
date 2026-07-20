@@ -3,6 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation"; 
 import { useEffect, useState } from "react";
+import Header from "@/components/home/header";
+import Footer from "@/components/home/footer";
 
 type Product = {
     id: number;
@@ -63,6 +65,7 @@ export default function Home() {
     },[]);
     return (
         <div className="flex h-screen flex-col items-center justify-center">
+            <Header/>
             <div className="m-auto text-center">
                 <h1 className="text-2xl mb-4">Welcome Home</h1>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -89,6 +92,7 @@ export default function Home() {
                     </ul>
                 </div>
             )}
+            <Footer/>
         </div>
     );
 }
