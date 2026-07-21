@@ -66,7 +66,7 @@ export default function Home() {
     return (
         <div className="flex h-screen flex-col items-center justify-center">
             <Header/>
-            <div className="m-auto text-center">
+            <div className="m-auto text-center mt-200">
                 <h1 className="text-2xl mb-4 mt-10">Welcome Home</h1>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 
@@ -80,7 +80,7 @@ export default function Home() {
             </div>
 
             {products.length > 0 && (
-                <div className="mt-8 w-full max-w-md text-left">
+                <div className="mt-30 w-full max-w-md text-left">
                     <h2 className="text-xl font-bold mb-4 text-center">Products List</h2>
                     <ul className="space-y-2">
                         {products.map((product) => (

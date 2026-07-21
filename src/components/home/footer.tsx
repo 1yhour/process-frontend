@@ -1,7 +1,19 @@
 import { footIcon ,resourceData} from "@/app/data/footerData";
+import { GrLanguage } from "react-icons/gr";
+import { IoIosArrowDown } from "react-icons/io";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 export default function Footer(){
     return(
-        <footer className="sticky bottom-0 z-50 w-full py-6 bg-white shadow-sm">
+        <footer className="bottom-0 z-50 w-full py-6 bg-white shadow-sm mt-20">
             <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-x-12">
                     <div className="md:col-span-4">
@@ -38,9 +50,35 @@ export default function Footer(){
                                     <a href="#">Contact</a>
                                 </div>
                             </div>
-                            <div>
-                                <p>English</p>
+                            <div className= "flex mt-1.5">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger render={<button/>}>
+                                        <div className="flex items-center gap-1.5 text-gray-800">
+                                            <GrLanguage size={13} />
+                                            <p className="text-md">English</p>
+                                            <IoIosArrowDown size={12}/>
+                                        </div>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent>
+                                    <DropdownMenuGroup>
+                                        <DropdownMenuLabel>
+                                            Language
+                                        </DropdownMenuLabel>
+                                        <DropdownMenuItem>
+                                            English
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            Khmer
+                                        </DropdownMenuItem>
+                                    </DropdownMenuGroup>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
                             </div>
+                        </div>
+                    </div>
+                    <div className="md:col-span-12 mt-16 text-neutral-400 w-full overflow-hidden leading-none select-none">
+                        <div className="flex justify-center text-center font-black text-[14vw] tracking-tighter w-full uppercase">
+                            <span>Procesio</span>
                         </div>
                     </div>
                 </div>
