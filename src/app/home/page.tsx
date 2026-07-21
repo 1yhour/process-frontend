@@ -67,7 +67,7 @@ export default function Home() {
         <div className="flex h-screen flex-col items-center justify-center">
             <Header/>
             <div className="m-auto text-center">
-                <h1 className="text-2xl mb-4">Welcome Home</h1>
+                <h1 className="text-2xl mb-4 mt-10">Welcome Home</h1>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 
                 <Button 
